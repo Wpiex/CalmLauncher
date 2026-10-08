@@ -10,7 +10,6 @@
 - Minecraft version management
 - Mod loader support
 - Instance management
-- Custom launcher configuration
 
 ## Account Authentication
 
