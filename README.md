@@ -1,3 +1,4 @@
+![Version](https://img.shields.io/badge/version-1.0-brightgreen)
 # ⛏️ Calm Launcher
 
 **A calm, clean and modern way to play Minecraft: Java Edition.**
