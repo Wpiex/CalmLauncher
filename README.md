@@ -1,68 +1,81 @@
-# Calm Launcher
+# ⛏️ Calm Launcher
 
-**Calm Launcher** is an independent third-party launcher for **Minecraft: Java Edition**, focused on a simple, clean, and convenient experience.
+**A calm, clean and modern way to play Minecraft: Java Edition.**
 
-## Features
+Calm Launcher is an independent Minecraft launcher focused on simplicity, convenience and a clean user experience.
 
-- Microsoft account authentication
-- Ely.by account authentication
-- Minecraft: Java Edition profile integration
-- Minecraft version management
-- Mod loader support
-- Instance management
+🌐 **Website:** https://wpiex.github.io/CalmLauncher  
+📦 **Downloads:** [GitHub Releases](https://github.com/wpiex/CalmLauncher/releases)  
+🐛 **Bug Reports:** [Report a bug](https://github.com/wpiex/CalmLauncher/issues)
 
-## Account Authentication
+> ⚠️ **Pre-release notice**
+>
+> Calm Launcher is currently in pre-release. Some features may be incomplete, bugs may occur, and changes may be introduced in future versions. Please report problems through GitHub Issues.
 
-Calm Launcher provides two separate authentication options:
+## ✨ Features
 
-### Microsoft
+- 🔐 **Account authentication** — Microsoft and Ely.by support.
+- 🎮 **Minecraft version management** — manage and launch supported game versions.
+- 🧩 **Mod loader support** — work with supported Minecraft mod loaders.
+- 👤 **Skin management** — view and manage player skins where supported.
+- ⚙️ **Launcher configuration** — customize settings for your system.
+- 🖥️ **Clean interface** — a simple, Minecraft-inspired launcher experience.
 
-Microsoft authentication is intended for users who own **Minecraft: Java Edition**.
+Feature availability depends on the launcher version and account provider.
 
-Calm Launcher uses the official Microsoft authentication flow and, where required, Xbox Live, XSTS, and Minecraft Services to authenticate the user's own account and retrieve their Minecraft profile.
+## 🚧 Known Limitations
 
-The launcher does not bypass Minecraft ownership, licensing, or authentication requirements.
+- **CurseForge integration is not implemented yet.** You cannot currently use Calm Launcher to browse, download or manage CurseForge modpacks and projects through a dedicated integration.
+- Some features may be incomplete or change during development.
+- Compatibility and stability may vary depending on the Minecraft version and installed mods.
 
-### Ely.by
+CurseForge support may be considered for a future release. No release date is promised.
 
-Calm Launcher also supports authentication through Ely.by as a separate account provider.
+## 📥 Download and Installation
 
-Ely.by accounts are handled independently from Microsoft accounts.
+1. Open the [Releases page](https://github.com/wpiex/CalmLauncher/releases).
+2. Select the latest pre-release.
+3. Download the launcher package from the **Assets** section.
+4. Extract the archive if required.
+5. Follow the installation or launch instructions included with that release.
 
-## Minecraft Profile
+Download Calm Launcher only from the official repository or its linked website.
 
-For Microsoft accounts, Calm Launcher is designed to use the user's official Minecraft Java Edition profile information, including:
+## 🛠️ Development
 
-- Minecraft username
-- UUID
-- Profile information
-- Skin information
+Calm Launcher is an independent project. Its source code is available in this repository under the terms of the included license.
 
-## Development Status
+Build requirements and setup instructions will be documented as needed.
 
-Calm Launcher is currently in development.
+## 🤝 Contributing
 
-Features and authentication functionality may change during development.
+Contributions, bug reports and feature suggestions are welcome!
 
-## Important Notice
+1. Fork this repository.
+2. Create a branch for your changes.
+3. Make your changes and test them.
+4. Open a Pull Request explaining what you changed.
 
-Calm Launcher is an **unofficial third-party Minecraft launcher**.
+For bug reports, include the launcher version, Windows version, reproduction steps and relevant logs.
 
-Calm Launcher is **not affiliated with, endorsed by, sponsored by, or officially connected to Mojang Studios, Microsoft, or Xbox**.
+**Never publish passwords, authentication tokens, private keys or other sensitive information.**
 
-Minecraft is a trademark of Microsoft Corporation.
+## 🔒 Security and Privacy
 
-## Privacy
+Please do not include personal information or authentication secrets in public issues.
 
-Calm Launcher is designed to authenticate users through the appropriate account provider rather than requesting or storing a user's Microsoft or Ely.by password.
+If you discover a security vulnerability, contact the project maintainer privately rather than publishing exploit details.
 
-Authentication credentials and tokens are handled separately for each supported account provider.
+## 📜 License
 
-## Contact
+See [`LICENSE`](LICENSE) for the license governing the use, modification and distribution of this project.
 
-For questions, bug reports, or information about Calm Launcher, please use this GitHub repository.
+## ⚖️ Disclaimer
+
+Calm Launcher is an independent, third-party project. It is not affiliated with, endorsed by, or officially connected to Mojang Studios or Microsoft.
+
+Minecraft is a trademark of Microsoft Corporation. CurseForge is a separate platform, and its mention does not imply any official affiliation or integration.
 
 ---
 
-**Calm Launcher**  
-Independent Minecraft: Java Edition launcher.
+**Made by Wpiex · ArtixTeam**
