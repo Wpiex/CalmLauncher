@@ -1,4 +1,7 @@
-![Version](https://img.shields.io/badge/version-1.0-brightgreen)
+<a href="https://github.com/wpiex/CalmLauncher/releases/latest">
+    Download Calm Launcher 1.0 pre-release
+</a>
+
 # ⛏️ Calm Launcher
 
 **A calm, clean and modern way to play Minecraft: Java Edition.**
