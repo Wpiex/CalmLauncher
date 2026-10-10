@@ -16,7 +16,7 @@ OWNER = "Wpiex"
 REPOSITORY = "CalmLauncher"
 LATEST_RELEASE_API = f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/releases/latest"
 USER_AGENT = "CalmLauncher-Updater/1.0"
-CURRENT_VERSION = "1.0"
+CURRENT_VERSION = "1.0p2"
 EXE_NAME = "Calm Launcher.exe"
 MAX_ARCHIVE_BYTES = 300 * 1024 * 1024
 MAX_UNPACKED_BYTES = 1_500 * 1024 * 1024
@@ -34,6 +34,7 @@ class NoReleases(RuntimeError):
 def _version_key(value: str) -> tuple[int, ...]:
     digits = re.findall(r"\d+", str(value or ""))
     return tuple(int(part) for part in digits) if digits else (0,)
+
 
 def _request_json(url: str) -> dict:
     request = urllib.request.Request(
@@ -58,6 +59,7 @@ def _request_json(url: str) -> dict:
         raise RuntimeError(f"GitHub update check failed (HTTP {exc.code}).") from exc
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
         raise RuntimeError("Check your Internet connection.") from exc
+
 
 def check_latest_release(current_version: str = CURRENT_VERSION):
     current_version = max(str(current_version or ''), CURRENT_VERSION, key=_version_key)
@@ -95,13 +97,16 @@ def check_latest_release(current_version: str = CURRENT_VERSION):
         "published_at": str(release.get("published_at") or ""),
     }
 
+
 def is_frozen() -> bool:
     return bool(getattr(sys, "frozen", False))
+
 
 def _app_root() -> Path:
     if is_frozen():
         return Path(sys.executable).resolve().parent
     return Path(__file__).resolve().parent.parent
+
 
 def _safe_extract(archive_path: Path, destination: Path) -> None:
     destination_resolved = destination.resolve()
@@ -133,6 +138,7 @@ def _safe_extract(archive_path: Path, destination: Path) -> None:
             with archive.open(info, "r") as source, output.open("wb") as target:
                 shutil.copyfileobj(source, target, length=1024 * 1024)
 
+
 def _find_project_root(extracted: Path) -> Path:
     if is_frozen():
         for current, _, files in os.walk(extracted):
@@ -149,6 +155,7 @@ def _find_project_root(extracted: Path) -> Path:
         "The release ZIP does not contain the Calm Launcher source layout (main.py, constants.py, core/, ui/)."
     )
 
+
 def _iter_release_files(source_root: Path):
     for current, directories, files in os.walk(source_root):
         directories[:] = [name for name in directories if name not in SKIP_DIRS]
@@ -161,6 +168,7 @@ def _iter_release_files(source_root: Path):
             if path.is_symlink() or not path.is_file():
                 continue
             yield path
+
 
 def _stage_frozen_update(source_root: Path, app_root: Path) -> None:
     staging = Path(tempfile.mkdtemp(prefix="calmlauncher-staged-"))
@@ -177,6 +185,7 @@ def _stage_frozen_update(source_root: Path, app_root: Path) -> None:
         "    goto wait",
         ")",
         f'xcopy "{staging}\\*" "{app_root}" /E /Y /I /Q >nul',
+        f'if exist "{app_root}\\_internal" rmdir /S /Q "{app_root}\\_internal"',
         f'rmdir /S /Q "{staging}"',
         f'start "" "{app_root / EXE_NAME}"',
         '(goto) 2>nul & del "%~f0"',
@@ -184,6 +193,7 @@ def _stage_frozen_update(source_root: Path, app_root: Path) -> None:
     script.write_text("\r\n".join(lines) + "\r\n", encoding="utf-8")
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)
     subprocess.Popen(["cmd.exe", "/c", str(script)], creationflags=flags, close_fds=True)
+
 
 def install_release_zip(asset_url: str, release_version: str = "") -> str:
     if not str(asset_url).startswith("https://"):

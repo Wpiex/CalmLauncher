@@ -34,6 +34,9 @@ from ui import sound
 from ui.i18n import tr, bind, set_lang, retranslate, ask
 from core import skins as skin_api
 
+TERMS_TEXT = "I accept all registration terms for this launcher and assume full responsibility."
+MICROSOFT_CLIENT_ID = "98c3ad7d-048d-44ea-a61a-11908b0a0647"
+
 NETWORK_ERROR_MARKERS = (
     "404", "403", "429", "500", "502", "503", "504",
     "connection", "timeout", "timed out", "network", "http error",
@@ -264,13 +267,13 @@ class Window(QWidget):
        card_layout.setContentsMargins(10, 10, 10, 10)
        card_layout.setSpacing(12)
 
-       ely = Button("Ely.by")
-       self.microsoft_button = Button("Microsoft")
-       ely.clicked.connect(lambda: self.user.setFocus())
-       self.microsoft_button.clicked.connect(self.microsoft_login)
+       self.ely_tab = Button("Ely.by")
+       self.ms_tab = Button("Microsoft")
+       self.ely_tab.clicked.connect(lambda: self.set_login_tab(0))
+       self.ms_tab.clicked.connect(lambda: self.set_login_tab(1))
 
-       card_layout.addWidget(ely)
-       card_layout.addWidget(self.microsoft_button)
+       card_layout.addWidget(self.ely_tab)
+       card_layout.addWidget(self.ms_tab)
        layout.addWidget(card)
 
        self.user = QLineEdit()
@@ -288,12 +291,39 @@ class Window(QWidget):
        login_card = Card()
        login_layout = box(login_card, 10)
 
-       button = btn("Login")
-       button.clicked.connect(self.login)
+       self.terms = bind(Check(TERMS_TEXT, wrap=True), TERMS_TEXT)
+       self.terms.toggled.connect(lambda _: self.update_login_buttons())
 
-       login_layout.addWidget(button)
+       self.login_button = btn("Login")
+       self.login_button.clicked.connect(self.login)
+
+       self.microsoft_button = btn("Login Via Microsoft")
+       self.microsoft_button.clicked.connect(self.microsoft_login)
+
+       login_layout.addWidget(self.terms)
+       login_layout.addWidget(self.login_button)
+       login_layout.addWidget(self.microsoft_button)
        layout.addWidget(login_card)
+       self.update_login_buttons()
+       self.set_login_tab(0)
        return page
+
+    def set_login_tab(self, index):
+        ely = index == 0
+        self.ely_tab.set_color(None if ely else GRAY)
+        self.ms_tab.set_color(GRAY if ely else None)
+        self.user.setVisible(ely)
+        self.pw.setVisible(ely)
+        self.login_button.setVisible(ely)
+        self.microsoft_button.setVisible(not ely)
+        if ely:
+            self.user.setFocus()
+
+    def update_login_buttons(self):
+        if not hasattr(self, "terms"):
+            return
+        accepted = self.terms.isChecked()
+        self.login_button.setEnabled(accepted)
 
     def main_page(self):
         widget = QWidget()
@@ -1015,9 +1045,38 @@ class Window(QWidget):
             self.apply_versions()
 
     def on_microsoft_code(self, uri, code):
-        self.msg.setText(tr("Open {} and enter the code: {}").format(uri, code))
+        dialog = QMessageBox(
+            QMessageBox.NoIcon,
+            "Microsoft",
+            tr("Your code is: {}").format(code),
+            QMessageBox.NoButton,
+            self,
+        )
+        ok = dialog.addButton(tr("Ok"), QMessageBox.AcceptRole)
+        copy = dialog.addButton(tr("Copy"), QMessageBox.ActionRole)
+        dialog.setDefaultButton(ok)
+        dialog.setEscapeButton(ok)
+        while True:
+            dialog.exec()
+            if dialog.clickedButton() is copy:
+                QApplication.clipboard().setText(code)
+                copy.setText(tr("Copied"))
+                continue
+            break
+        self.msg.setText(tr("Waiting for Microsoft authorization..."))
+        self.code_ok = True
+        self.code_wait.set()
+
+    def ask_code(self, uri, code):
+        self.code_ok = False
+        self.code_wait = threading.Event()
+        self.bridge.microsoft_code.emit(uri, code)
+        self.code_wait.wait(900)
+        return self.code_ok
 
     def login(self):
+        if not self.terms.isChecked():
+            return
         username, password = self.user.text().strip(), self.pw.text()
         if not username or not password:
             return
@@ -1035,21 +1094,7 @@ class Window(QWidget):
             self.bridge.error.emit(str(exc))
 
     def microsoft_client_id(self):
-        value = vault.get("microsoft") or str(self.cfg.get("microsoft_client_id") or "").strip()
-        if value:
-            return value
-        value, ok = QInputDialog.getText(
-            self,
-            "Microsoft",
-            tr("Enter your Microsoft token (Azure application ID):"),
-            QLineEdit.Password,
-        )
-        value = value.strip()
-        if not ok or not value:
-            return ""
-        self.cfg["microsoft_client_id"] = value
-        save_cfg(self.cfg)
-        return value
+        return MICROSOFT_CLIENT_ID
 
     def microsoft_login(self):
         if not hasattr(self, "microsoft_button"):
@@ -1058,11 +1103,15 @@ class Window(QWidget):
         if not self.microsoft_button.isEnabled():
             return
 
+        if not self.terms.isChecked():
+            QMessageBox.warning(self, APP_NAME, tr("Please Accept Registration terms"))
+            return
+
         client_id = self.microsoft_client_id()
         if not client_id:
             return
 
-        self.msg.setText(tr("Waiting for Microsoft authorization..."))
+        self.msg.setText("")
         self.microsoft_button.setEnabled(False)
 
         threading.Thread(
@@ -1075,9 +1124,7 @@ class Window(QWidget):
         try:
             account = microsoft_login(
                 client_id,
-                on_device_code=lambda uri, code: (
-                    self.bridge.microsoft_code.emit(uri, code)
-                )
+                on_device_code=self.ask_code,
             )
             self.bridge.logged.emit(account)
         except Exception as exc:
@@ -1085,7 +1132,8 @@ class Window(QWidget):
 
     def on_logged(self, account):
         if hasattr(self, "microsoft_button"):
-           self.microsoft_button.setEnabled(True)
+           self.terms.setChecked(False)
+           self.update_login_buttons()
 
            self.cfg["account"] = account
            save_cfg(self.cfg)
@@ -1095,8 +1143,7 @@ class Window(QWidget):
            self.show_play()
 
     def on_error(self, text):
-        if hasattr(self, "microsoft_button"):
-           self.microsoft_button.setEnabled(True)
+        self.update_login_buttons()
         sound.error()
         text = str(text)
         lowered = text.lower()
@@ -1129,6 +1176,7 @@ class Window(QWidget):
            self.bar.setValue(value)
 
     def logout(self):
+        self.terms.setChecked(False)
         self.cfg["account"] = None
         save_cfg(self.cfg)
         self.update_account_bar()

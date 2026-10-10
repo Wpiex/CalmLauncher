@@ -114,10 +114,11 @@ class Select(QComboBox):
         p.drawPolygon(QPolygon([QPoint(x, y), QPoint(x + 10, y), QPoint(x + 5, y + 6)]))
 
 class Check(QCheckBox):
-    def __init__(self, text):
+    def __init__(self, text, wrap=False):
         super().__init__(text)
+        self.wrap = wrap
         self.setCursor(Qt.PointingHandCursor)
-        self.setFixedHeight(32)
+        self.setFixedHeight(52 if wrap else 32)
         self.clicked.connect(sound.click)
 
     def paintEvent(self, e):
@@ -130,7 +131,8 @@ class Check(QCheckBox):
             p.setBrush(QColor(255, 255, 255))
             p.drawRect(box.adjusted(8, 8, -8, -8))
         p.setPen(QColor(255, 255, 255))
-        p.drawText(QRect(36, 0, self.width() - 36, self.height()), Qt.AlignVCenter | Qt.AlignLeft, self.text())
+        flags = int(Qt.AlignVCenter.value | Qt.AlignLeft.value | (Qt.TextWordWrap.value if self.wrap else 0))
+        p.drawText(QRect(36, 0, self.width() - 36, self.height()), flags, self.text())
 
 class Credit(QWidget):
     def __init__(self, text):

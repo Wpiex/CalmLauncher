@@ -1,6 +1,5 @@
 import time
 import webbrowser
-
 import requests
 
 
@@ -59,17 +58,18 @@ def microsoft_login(client_id, timeout=300, on_device_code=None):
     )
     device = _check_response(response, "Microsoft OAuth")
 
+    started = time.monotonic()
     device_code = device["device_code"]
     user_code = device["user_code"]
     verification_uri = device["verification_uri"]
 
-    if on_device_code:
-        on_device_code(verification_uri, user_code)
+    if on_device_code and not on_device_code(verification_uri, user_code):
+        raise OAuthError("Microsoft authorization was cancelled.")
 
     webbrowser.open(verification_uri, new=2)
 
     interval = max(1, int(device.get("interval", 5)))
-    deadline = time.monotonic() + min(
+    deadline = started + min(
         timeout,
         int(device.get("expires_in", timeout)),
     )

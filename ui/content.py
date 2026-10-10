@@ -153,7 +153,7 @@ class ContentPage(Panel):
         self.last_query = ""
         self.search_timer = QTimer(self)
         self.search_timer.setSingleShot(True)
-        self.search_timer.setInterval(2000)
+        self.search_timer.setInterval(100)
         self.search_timer.timeout.connect(self.auto_search)
         self.search.textChanged.connect(lambda _: self.search_timer.start())
         self.inst = Select()
