@@ -1,5 +1,5 @@
 <a href="https://github.com/wpiex/CalmLauncher/releases/latest">
-    Download Calm Launcher 1.0 pre-release
+    Releases
 </a>
 
 # ⛏️ Calm Launcher
