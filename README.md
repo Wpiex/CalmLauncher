@@ -1,85 +1,46 @@
-<a href="https://github.com/wpiex/CalmLauncher/releases/latest">
-    Releases
-</a>
+# Calm Launcher
 
-# ⛏️ Calm Launcher
+**A lightweight, customizable Minecraft: Java Edition launcher.**
 
-**A calm, clean and modern way to play Minecraft: Java Edition.**
-
-Calm Launcher is an independent Minecraft launcher focused on simplicity, convenience and a clean user experience.
-
-🌐 **Website:** https://wpiex.github.io/CalmLauncher  
-📦 **Downloads:** [GitHub Releases](https://github.com/wpiex/CalmLauncher/releases)  
-🐛 **Bug Reports:** [Report a bug](https://github.com/wpiex/CalmLauncher/issues)
-
-> ⚠️ **Pre-release notice**
->
-> Calm Launcher is currently in pre-release. Some features may be incomplete, bugs may occur, and changes may be introduced in future versions. Please report problems through GitHub Issues.
+Developed by **Wpiex**.
 
 ## ✨ Features
 
-- 🔐 **Account authentication** — Microsoft and Ely.by support.
-- 🎮 **Minecraft version management** — manage and launch supported game versions.
-- 🧩 **Mod loader support** — work with supported Minecraft mod loaders.
-- 👤 **Skin management** — view and manage player skins where supported.
-- ⚙️ **Launcher configuration** — customize settings for your system.
-- 🖥️ **Clean interface** — a simple, Minecraft-inspired launcher experience.
+- 🎮 Install and manage Minecraft versions and instances.
+- 🧩 Support for Vanilla, Fabric, Forge, and NeoForge.
+- 📦 Modrinth and CurseForge integration.
+- 🔐 Microsoft and Ely.by authentication.
+- 👕 3D skin preview and Classic/Slim model selection.
+- ⚙️ Java version, RAM, and JVM argument settings.
+- 🎨 Custom accent and background colors.
+- 🌐 English and Russian languages.
+- ❤️ DonationAlerts integration.
+- 🔄 Launcher updates via GitHub Releases.
 
-Feature availability depends on the launcher version and account provider.
+## 🖥️ Platform Support
 
-## 🚧 Known Limitations
+- **Windows** — current platform.
+- **Linux** — planned. Support will be implemented with help from a project contributor.
 
-- **CurseForge integration is not implemented yet.** You cannot currently use Calm Launcher to browse, download or manage CurseForge modpacks and projects through a dedicated integration.
-- Some features may be incomplete or change during development.
-- Compatibility and stability may vary depending on the Minecraft version and installed mods.
+## 🔑 API Tokens
 
-CurseForge support may be considered for a future release. No release date is promised.
+Microsoft and CurseForge integrations support user-provided credentials where required.
 
-## 📥 Download and Installation
+- **Microsoft:** OAuth authentication and Minecraft account verification.
+- **CurseForge:** API token required for content access. Permanent developer-side token configuration is planned.
 
-1. Open the [Releases page](https://github.com/wpiex/CalmLauncher/releases).
-2. Select the latest pre-release.
-3. Download the launcher package from the **Assets** section.
-4. Extract the archive if required.
-5. Follow the installation or launch instructions included with that release.
+Never commit private tokens or credentials to the repository.
 
-Download Calm Launcher only from the official repository or its linked website.
+## 🚀 Installation
 
-## 🛠️ Development
-
-Calm Launcher is an independent project. Its source code is available in this repository under the terms of the included license.
-
-Build requirements and setup instructions will be documented as needed.
-
-## 🤝 Contributing
-
-Contributions, bug reports and feature suggestions are welcome!
-
-1. Fork this repository.
-2. Create a branch for your changes.
-3. Make your changes and test them.
-4. Open a Pull Request explaining what you changed.
-
-For bug reports, include the launcher version, Windows version, reproduction steps and relevant logs.
-
-**Never publish passwords, authentication tokens, private keys or other sensitive information.**
-
-## 🔒 Security and Privacy
-
-Please do not include personal information or authentication secrets in public issues.
-
-If you discover a security vulnerability, contact the project maintainer privately rather than publishing exploit details.
+Download the latest release from [GitHub Releases](https://github.com/Wpiex/CalmLauncher/releases).
 
 ## 📜 License
 
-See [`LICENSE`](LICENSE) for the license governing the use, modification and distribution of this project.
+See [`LICENSE`](LICENSE).
 
-## ⚖️ Disclaimer
+## ⚠️ Disclaimer
 
-Calm Launcher is an independent, third-party project. It is not affiliated with, endorsed by, or officially connected to Mojang Studios or Microsoft.
+Calm Launcher is an independent project and is not affiliated with Mojang Studios, Microsoft, CurseForge, Modrinth, or Ely.by.
 
-Minecraft is a trademark of Microsoft Corporation. CurseForge is a separate platform, and its mention does not imply any official affiliation or integration.
-
----
-
-**Made by Wpiex · ArtixTeam**
+**#ArtixTeam**
