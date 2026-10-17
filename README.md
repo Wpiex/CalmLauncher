@@ -2,8 +2,6 @@
 
 **A lightweight, customizable Minecraft: Java Edition launcher.**
 
-Developed by **Wpiex**.
-
 ## ✨ Features
 
 - 🎮 Install and manage Minecraft versions and instances.
@@ -28,8 +26,6 @@ Developed by **Wpiex**.
 1. Download the latest ZIP archive from [GitHub Releases](https://github.com/Wpiex/CalmLauncher/releases).
 2. Extract the archive to any folder.
 3. Run `Calm Launcher.exe`.
-
-Updates are delivered automatically through the built-in updater.
 
 ## 🔌 Plugins
 
