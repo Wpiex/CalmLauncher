@@ -12,35 +12,29 @@ Developed by **Wpiex**.
 - 🔐 Microsoft and Ely.by authentication.
 - 👕 3D skin preview and Classic/Slim model selection.
 - ⚙️ Java version, RAM, and JVM argument settings.
+- 🚀 Optimized Versions mode for faster version loading.
+- 🔌 Plugin system with a dedicated Plugins tab in Settings (PlugAPI 1.0).
 - 🎨 Custom accent and background colors.
 - 🌐 English and Russian languages.
-- ❤️ DonationAlerts integration.
-- 🔄 Launcher updates via GitHub Releases.
+- 🔄 Built-in launcher updates via GitHub Releases.
 
 ## 🖥️ Platform Support
 
-- **Windows** — current platform.
-- **Linux** — planned. Support will be implemented with help from a project contributor.
-
-## 🔑 API Tokens
-
-Microsoft and CurseForge integrations support user-provided credentials where required.
-
-- **Microsoft:** OAuth authentication and Minecraft account verification.
-- **CurseForge:** API token required for content access. Permanent developer-side token configuration is planned.
-
-Never commit private tokens or credentials to the repository.
+- **Windows** — supported. (10/11)
+- **Linux** — Planned.
 
 ## 🚀 Installation
 
-Download the latest release from [GitHub Releases](https://github.com/Wpiex/CalmLauncher/releases).
+1. Download the latest ZIP archive from [GitHub Releases](https://github.com/Wpiex/CalmLauncher/releases).
+2. Extract the archive to any folder.
+3. Run `Calm Launcher.exe`.
+
+Updates are delivered automatically through the built-in updater.
+
+## 🔌 Plugins
+
+Plugins are placed in the `plugins` folder and managed from **Settings → Plugins**. The current plugin API version is shown in **About Launcher**.
 
 ## 📜 License
 
 See [`LICENSE`](LICENSE).
-
-## ⚠️ Disclaimer
-
-Calm Launcher is an independent project and is not affiliated with Mojang Studios, Microsoft, CurseForge, Modrinth, or Ely.by.
-
-**#ArtixTeam**
