@@ -29,7 +29,9 @@
 
 ## 🔌 Plugins
 
-Plugins are placed in the `plugins` folder and managed from **Settings → Plugins**. The current plugin API version is shown in **About Launcher**.
+- Plugins are placed in the `plugins` folder and managed from **Settings → Plugins**.
+- The current plugin API version is shown in **About Launcher**.
+- You can also read the `Documentation_EN` or `Documentation_RU` in `CalmLauncher/docs`.
 
 ## 📜 License
 
