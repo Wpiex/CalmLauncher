@@ -19,7 +19,7 @@
 ## 🖥️ Platform Support
 
 - **Windows** — supported. (10/11)
-- **Linux** — Planned.
+- **Linux** — Use "Port Proton"
 
 ## 🚀 Installation
 
